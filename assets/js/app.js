@@ -5,7 +5,7 @@ var margin = {top: 20, right: 20, bottom: 50, left: 400};
 var width = svgWidth - margin.left - margin.right;
 var height = svgHeight - margin.top - margin.bottom;
 
-// Create an SVG wrapper, append it to a group and adjust margins
+// Create an SVG WRAPPER, append it to a group and adjust margins
 var svg = d3.select("body")
   .append("svg")
   .attr("width", svgWidth)
@@ -31,7 +31,7 @@ healthData.forEach(function(data) {
 var xLinearScale = d3.scaleLinear().range([0, width]);
 var yLinearScale = d3.scaleLinear().range([height, 0]);
 
-// Define the data functions for x and y axis
+// Define the DATA functions for x and y axis
 var bottomAxis = d3.axisBottom(xLinearScale);
 var leftAxis = d3.axisLeft(yLinearScale);
 
@@ -90,6 +90,25 @@ chartGroup.append("text")
       return data.abbr
     });
 
+// Build the TOOLTIPS and call it into the chart
+var toolTip = d3.tip()
+  .attr("class", "tooltip")
+  .offset([45, -30])
+  .html(function(d) {
+    return (d.state);
+  });
+
+chartGroup.call(toolTip);
+
+// Event listener for tooltips on and off
+circlesGroup.on("mouseover", function(data) {
+  toolTip.show(data, this);
+})
+
+.on("mouseout", function(data, index) {
+    toolTip.hide(data);
+});
+
   chartGroup.append("text")
   .attr("transform", "rotate(-90)")
   .attr("y", 0 - 50)
@@ -105,23 +124,5 @@ chartGroup.append("text")
   .attr("class", "axisText")
   .text("In Poverty (%)");
 
-// Build the tooltip and call it into the chart
-var toolTip = d3.tip()
-  .attr("class", "tooltip")
-  .offset([40, -60])
-  .html(function(data) {
-    return "<div>" + (data.abbr + '%') + "</div>";
-    });
-
-chartGroup.call(toolTip);
-
-// Event listener to turn the tooltip on and off
-circlesGroup.on("mouseover", function(data) {
-  toolTip.show(data);
-})
-
-.on("mouseout", function(data, index) {
-    toolTip.hide(data);
-});
-
+return circlesGroup;
 });
