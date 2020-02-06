@@ -1,5 +1,5 @@
 // Create plot orientation setup
-var svgWidth = 1100;
+var svgWidth = 1200;
 var svgHeight = 550;
 var margin = {top: 20, right: 20, bottom: 50, left: 400};
 var width = svgWidth - margin.left - margin.right;
@@ -67,8 +67,8 @@ var circlesGroup = chartGroup.selectAll("circle")
   .data(healthData)
   .enter()
   .append("circle")
-  .attr("cx", d => xLinearScale(d.healthcare +1.5))
-  .attr("cy", d => yLinearScale(d.poverty +0.3))
+  .attr("cx", d => xLinearScale(d.healthcare + 0.3))
+  .attr("cy", d => yLinearScale(d.poverty + 0.2))
   .attr("r", "16")
   .attr("fill", "dodgerblue")
   .attr("opacity", .5)
@@ -81,10 +81,10 @@ chartGroup.append("text")
   .enter()
   .append("tspan")
     .attr("x", function(data) {
-      return xLinearScale(data.healthcare +1.28);
+      return xLinearScale(data.healthcare);
     })
     .attr("y", function(data) {
-      return yLinearScale(data.poverty +.15);
+      return yLinearScale(data.poverty);
     })
     .text(function(data) {
       return data.abbr
